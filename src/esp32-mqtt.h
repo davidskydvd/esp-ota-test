@@ -37,10 +37,10 @@ bool emailSent2 = false;
 SMTPData smtpData;
 
 // OTA
-#include <AsyncTCP.h>
-#include <ESPAsyncWebServer.h>
-#include <AsyncElegantOTA.h>
-AsyncWebServer server(8888);
+//#include <AsyncTCP.h>
+//#include <ESPAsyncWebServer.h>
+//AsyncWebServer server(8888);
+
 #include "ESP32_MailClient.h"
 
 // SENSOR
@@ -112,7 +112,7 @@ void messageReceived(String &topic, String &payload){
     airSensor.setForcedRecalibrationFactor(forcedCalibval);
     EEPROM.write(2, forcedCalibval);
     EEPROM.commit();
-    
+
     if (airSensor.getForcedRecalibration(&forcedCalibval) == true) // Get the setting
     {
       Serial.print("Forced recalibration factor (ppm) is ");
@@ -161,22 +161,24 @@ String getSensor(){
   int BOXNUM = 17;
   String TANK = "X";
   String SITE = "Taguig";
-  float phFloat, ecFloat, wtFloat;
+  float phFloat = 0;
+  float ecFloat = 0;
+  float wtFloat = 0;
 
   const int RACK = 0;
   const float LIGHTLUX = 0;
   const int LIGHTSTATUS = 0;
-  
+
   float t = hdc1080.readTemperature() + tOffset;
   float h = hdc1080.readHumidity() + hOffset;
   float co2 = -1;
-  
+
   String loadPay = String("{\"System\":") + ("\"") + SYS  + ("\"") +                      //string
                      String(",\"deviceID\":") + ("\"") + DEVICE + ("\"") +                //string
                      String(",\"Box\":") + ("\"") + BOXNUM + ("\"") +                     //integer
                      String(",\"tank\":") + ("\"") + TANK + ("\"") +                      //string
                      String(",\"site\":") + ("\"") + SITE + ("\"") +                      //string
-                     String(",\"rack\":") + ("\"") + RACK + ("\"") +   
+                     String(",\"rack\":") + ("\"") + RACK + ("\"") +
                      String(",\"timecollected\":") + ("\"") + time(nullptr) + ("\"") +    //timestamp
                      String(",\"pH\":") + ("\"") + phFloat + ("\"") +                     //float
                      String(",\"EC\":") + ("\"") + ecFloat + ("\"") +                     //float
@@ -187,7 +189,7 @@ String getSensor(){
                      String(",\"lightLux\":") + ("\"") + LIGHTLUX + ("\"") +              //float
                      String(",\"lightStatus\":") + ("\"") + LIGHTSTATUS + ("\"") +        //integer
                      String("}");
-                              
+
   blinkLED(ledData);
   Serial.println(loadPay);
   return loadPay;
@@ -226,11 +228,6 @@ void setupWifi(){
   Serial.print("Connected to: "); Serial.println(ssid);
   Serial.print("IP address: "); Serial.println(WiFi.localIP());
 
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(200, "text/plain", "Hi! I am ESP32.");
-  });
-  AsyncElegantOTA.begin(&server);                                       // Start Elegant OTA
-  server.begin();
   Serial.println("HTTP Server started.");
   Serial.println("Net connected.");
 }

@@ -1,5 +1,8 @@
 #include <Arduino.h>
 
+#include "esp32-mqtt.h"
+#include "esp_system.h"
+
 #include <DNSServer.h>
 
 #include <WebServer.h>
@@ -18,6 +21,8 @@
 WiFiClient client;
 WebServer server(80);
 
+hw_timer_t *watchdogTimer = NULL;
+long looptime = 0;
 
 /*
  * Check if needs to update the device and returns the download url.
@@ -165,6 +170,7 @@ void handleRoot()
 void setup()
 {
   Serial.begin(115200);
+  Wire.begin();
   Serial.setDebugOutput(true);
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -205,7 +211,6 @@ void setup()
   USE_SERIAL.println(WiFi.localIP());
 }
 
-int ledState = LOW;
 const long interval = 1000;
 unsigned long previousMillis = 0;
 
