@@ -10,6 +10,8 @@
 #include "ciotc_config.h"         // Update this file with your configuration
 #include "ESP32_MailClient.h"
 
+#define CURRENT_VERSION VERSION
+
 //EEPROM
 #include <EEPROM.h>
 #define EEPROM_SIZE 3
@@ -207,8 +209,22 @@ void setupWifi(){
   unsigned long connectMillis = 0;
   Serial.println("Starting wifi");
 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+  // Setup Wifi Manager
+  String version = String("<p>Current Version - v") + String(CURRENT_VERSION) + String("</p>");
+  Serial.println(version);
+
+  WiFiManager wm;
+  WiFiManagerParameter versionText(version.c_str());
+  wm.addParameter(&versionText);
+
+  if (!wm.autoConnect())
+  {
+    Serial.println("failed to connect and hit timeout");
+    //reset and try again, or maybe put it to deep sleep
+    ESP.restart();
+    delay(1000);
+  }
+
   Serial.println("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED){
     connectnetwork = false;
@@ -225,11 +241,6 @@ void setupWifi(){
   while (time(nullptr) < 1510644967){
     delay(10);
   }
-  Serial.print("Connected to: "); Serial.println(ssid);
-  Serial.print("IP address: "); Serial.println(WiFi.localIP());
-
-  Serial.println("HTTP Server started.");
-  Serial.println("Net connected.");
 }
 
 void startMQTT(){

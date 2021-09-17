@@ -15,7 +15,6 @@
 
 #define USE_SERIAL Serial
 
-#define CURRENT_VERSION VERSION
 #define CLOUD_FUNCTION_URL "https://asia-east1-farms-arduino-270802.cloudfunctions.net/getDownloadUrl" // CAN BE FOUND UNDER TRIGGER TAB
                             //https://asia-east1-farms-arduino-270802.cloudfunctions.net/getDownloadUrl?version=v1.0.1&variant=esp32
 WiFiClient client;
@@ -172,25 +171,11 @@ void setup()
   Serial.begin(115200);
   Wire.begin();
   Serial.setDebugOutput(true);
-  pinMode(LED_BUILTIN, OUTPUT);
-
   delay(3000);
   Serial.println("\n Starting");
-  // Setup Wifi Manager
-  String version = String("<p>Current Version - v") + String(CURRENT_VERSION) + String("</p>");
-  USE_SERIAL.println(version);
 
-  WiFiManager wm;
-  WiFiManagerParameter versionText(version.c_str());
-  wm.addParameter(&versionText);
-
-  if (!wm.autoConnect())
-  {
-    Serial.println("failed to connect and hit timeout");
-    //reset and try again, or maybe put it to deep sleep
-    ESP.restart();
-    delay(1000);
-  }
+  //Setup Wifi Credentials
+  setupCloudIoT();
 
   // Check if we need to download a new version
   String downloadUrl = getDownloadUrl();
@@ -207,8 +192,9 @@ void setup()
   server.begin();
   USE_SERIAL.println("HTTP server started");
 
-  USE_SERIAL.print("IP address: ");
-  USE_SERIAL.println(WiFi.localIP());
+  USE_SERIAL.print("IP address: "); USE_SERIAL.println(WiFi.localIP());
+  Serial.println("Net connected.");
+
 }
 
 const long interval = 1000;
