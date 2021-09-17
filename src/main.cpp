@@ -166,13 +166,31 @@ void handleRoot()
   server.send(200, "text/plain", "v" + String(CURRENT_VERSION));
 }
 
+void interruptReboot(){
+  Serial.println("Rebooting...");
+  esp_restart();
+}
+
 void setup()
 {
   Serial.begin(115200);
   Wire.begin();
+  hdc1080.begin(0x40);
   Serial.setDebugOutput(true);
   delay(3000);
   Serial.println("\n Starting");
+
+  pinMode(ledPower, OUTPUT); digitalWrite(ledPower, HIGH);
+  pinMode(ledNet, OUTPUT);
+  pinMode(ledData, OUTPUT);
+
+  EEPROM.begin(EEPROM_SIZE);
+  readEEPROM();
+
+  watchdogTimer = timerBegin(0, 80, true);                        //timer 0 divisor 80
+  timerAlarmWrite(watchdogTimer, 300000 * 1000, false);           // time in uS: 5mins
+  timerAttachInterrupt(watchdogTimer, & interruptReboot, true);
+  timerAlarmEnable(watchdogTimer);                                // enable interrupt 
 
   //Setup Wifi Credentials
   setupCloudIoT();
@@ -205,10 +223,31 @@ void loop()
 
   unsigned long currentMillis = millis();
 
+  timerWrite(watchdogTimer, 0);
+  mqtt->loop();
+  delay(10);                          // <- fixes some issues with WiFi stability
+
+  if (!mqttClient->connected()) {
+    connect();
+  }
+
+  if (connectnetwork == true){
+    digitalWrite(ledNet, HIGH);
+  }
+
   if(currentMillis - previousMillis >= interval){
     previousMillis = currentMillis;
-    Serial.println("Hello OTA!");
+    Serial.println("Hello There!");
   }
+
+  /*
+  if (millis() - lastMillis >= 60000) {
+
+    lastMillis = millis();
+    Serial.println("Publishing telemetry data:");
+    publishTelemetry(getSensor());
+  }
+  */
 
   // Just chill
   server.handleClient();
