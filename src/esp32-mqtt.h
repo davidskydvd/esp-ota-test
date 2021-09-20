@@ -207,9 +207,10 @@ String getJwt(){
 
 
 void setupWifi(){
-  //unsigned long connectMillis = 0;
-  Serial.println("Starting wifi");
+  unsigned long connectMillis = 0;
 
+  Serial.println("Starting wifi");
+  /*
   // Setup Wifi Manager
   String version = String("<p>Current Version - v") + String(CURRENT_VERSION) + String("</p>");
   Serial.println(version);
@@ -225,8 +226,10 @@ void setupWifi(){
     ESP.restart();
     delay(1000);
   }
+  */
 
-  /*
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
   Serial.println("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED){
     connectnetwork = false;
@@ -237,7 +240,7 @@ void setupWifi(){
       delay(100);
     }
   }
-  */
+
 
   connectnetwork = true;
   configTime(0, 0, ntp_primary, ntp_secondary);
@@ -245,6 +248,8 @@ void setupWifi(){
   while (time(nullptr) < 1510644967){
     delay(10);
   }
+  Serial.print("Connected to: "); Serial.println(ssid);
+  Serial.print("IP address: "); Serial.println(WiFi.localIP());
 }
 
 void startMQTT(){
