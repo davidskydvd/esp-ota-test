@@ -9,6 +9,7 @@
 #include <CloudIoTCoreMqtt.h>
 #include "ciotc_config.h"         // Update this file with your configuration
 #include "ESP32_MailClient.h"
+#include <WiFiManager.h> // https://github.com/tzapu/WiFiManager
 
 #define CURRENT_VERSION VERSION
 
@@ -206,7 +207,7 @@ String getJwt(){
 
 
 void setupWifi(){
-  unsigned long connectMillis = 0;
+  //unsigned long connectMillis = 0;
   Serial.println("Starting wifi");
 
   // Setup Wifi Manager
@@ -225,6 +226,7 @@ void setupWifi(){
     delay(1000);
   }
 
+  /*
   Serial.println("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED){
     connectnetwork = false;
@@ -235,6 +237,8 @@ void setupWifi(){
       delay(100);
     }
   }
+  */
+
   connectnetwork = true;
   configTime(0, 0, ntp_primary, ntp_secondary);
   Serial.println("Waiting on time sync...");
