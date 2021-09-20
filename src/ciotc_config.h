@@ -15,8 +15,8 @@
 // This file contains your configuration used to connect to Cloud IoT Core
 
 // Wifi newtork details.
-const char *ssid = "SKYfiberEF2D";
-const char *password = "360861193";
+const char *ssid = "DDSTM12";
+const char *password = "thanksdavid";
 
 // Cloud iot details.
 const char *project_id = "farms-arduino-270802";
