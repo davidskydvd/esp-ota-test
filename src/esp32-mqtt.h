@@ -231,6 +231,7 @@ void setupWifi(){
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
   Serial.println("Connecting to WiFi");
+  String version = String("<p>Current Version - v") + String(CURRENT_VERSION) + String("</p>");
   while (WiFi.status() != WL_CONNECTED){
     connectnetwork = false;
     if ((millis() - connectMillis >= 1000) && (connectnetwork == false)){
