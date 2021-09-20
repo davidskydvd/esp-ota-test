@@ -10,7 +10,7 @@ const projectId = process.env.GCLOUD_PROJECT
 
 const bqClient = new BigQuery( { projectId } )
 const storage = new Storage()
-const bucket = storage.bucket( `esp-ota-firmwares` )
+const bucket = storage.bucket( `ota-esp-firmwares-test` )
 
 
 async function insertIntoBigquery( data ) {

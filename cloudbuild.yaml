@@ -9,7 +9,7 @@ steps:
     dir: .
 artifacts:
   objects:
-    location: 'gs://esp-ota-firmwares/$TAG_NAME'
+    location: 'gs://ota-esp-firmwares-test/$TAG_NAME'
     paths:
       - /workspace/.pio/build/esp32/firmware_esp32.bin
     # - /workspace/.pio/build/esp8266/firmware_esp8266.bin
