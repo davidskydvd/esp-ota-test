@@ -1,21 +1,35 @@
+/******************************************************************************
+ * Copyright 2018 Google
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *****************************************************************************/
 // This file contains your configuration used to connect to Cloud IoT Core
 
-// Wifi network details.
-//const char *ssid = "SKYfiberEF2D";
-//const char *password = "360861193";
+// Wifi newtork details.
+const char *ssid = "SKYfiberEF2D";
+const char *password = "360861193";
 
 // Cloud iot details.
 const char *project_id = "farms-arduino-270802";
 const char *location = "asia-east1";
-const char *registry_id = "iot-automation-registry";
-const char *device_id = "aqms10001-device";
+const char *registry_id = "test-HA-registry";
+const char *device_id = "farmlab-test-aqms";
 
 // Configuration for NTP
 const char* ntp_primary = "pool.ntp.org";
 const char* ntp_secondary = "time.nist.gov";
 
 #ifndef LED_BUILTIN
-#define LED_BUILTIN 13
+#define LED_BUILTIN 2
 #endif
 
 // To get the private key run (where private-key.pem is the ec private key
@@ -27,12 +41,12 @@ const char* ntp_secondary = "time.nist.gov";
 // it's smaller add "00:" to the start. If it's too big or too small something
 // is probably wrong with your key.
 const char *private_key_str =
-    "5a:ec:b0:f8:14:c9:55:a9:88:39:3f:0c:72:cf:ff:"
-    "4c:b0:ee:38:50:0f:a0:b0:2d:3a:ce:42:7d:1b:6c:"
-    "02:38";
+    "f2:40:49:0a:3f:f2:db:7b:0e:f4:4c:77:b2:bc:63:"
+    "dc:6e:01:20:20:a9:d8:0f:bb:f2:2d:b3:cf:b4:fa:"
+    "0a:ab";
 
-// Time (seconds) to expire token += 20 minutes for drift
-const int jwt_exp_secs = 60*20; // Maximum 24H (3600*24)
+// Time (seconds) to expire token += 20 minutes for drift 
+const int jwt_exp_secs = 3600*24; // Maximum 24H (3600*24)
 
 // To get the certificate for your region run:
 //   openssl s_client -showcerts -connect mqtt.googleapis.com:8883
@@ -77,4 +91,4 @@ const char* ex_topics[ex_num_topics];
 //const int ex_num_topics = 1;
 //const char* ex_topics[ex_num_topics] = {
 //  "/devices/my-device/tbd/#"
-//};
+//};x
