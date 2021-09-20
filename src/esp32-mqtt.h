@@ -160,7 +160,7 @@ String getSensor(){
   //Payload Definitions:
   String SYS = "AQMS";
   String DEVICE = "esp32";
-  int BOXNUM = 17;
+  int BOXNUM = 25;
   String TANK = "X";
   String SITE = "Taguig";
   float phFloat = 0;
