@@ -67,6 +67,7 @@ float eet, eeh;                 // variables for calling/storing? eeprom values
 
 bool connectnetwork = false;
 
+
 void messageReceived(String &topic, String &payload){
   Serial.println("incoming: " + topic + " - " + payload);
   int index = payload.indexOf(":");

@@ -217,6 +217,7 @@ void setup()
 
 const long interval = 1000;
 unsigned long previousMillis = 0;
+unsigned long lastMillis = 0;
 
 void loop()
 {
@@ -235,19 +236,20 @@ void loop()
     digitalWrite(ledNet, HIGH);
   }
 
+  /*
   if(currentMillis - previousMillis >= interval){
     previousMillis = currentMillis;
     Serial.println("Hello There!");
   }
+  */
 
-  /*
   if (millis() - lastMillis >= 60000) {
 
     lastMillis = millis();
     Serial.println("Publishing telemetry data:");
     publishTelemetry(getSensor());
   }
-  */
+
 
   // Just chill
   server.handleClient();
