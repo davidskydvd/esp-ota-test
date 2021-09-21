@@ -250,7 +250,7 @@ void setupWifi(){
   while (time(nullptr) < 1510644967){
     delay(10);
   }
-  Serial.print("Connected to: "); Serial.println(ssid);
+  //Serial.print("Connected to: "); Serial.println(ssid);
   Serial.print("IP address: "); Serial.println(WiFi.localIP());
 }
 
