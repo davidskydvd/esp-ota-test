@@ -11,8 +11,6 @@
 #include "ESP32_MailClient.h"
 #include <WiFiManager.h> // https://github.com/tzapu/WiFiManager
 
-#define CURRENT_VERSION VERSION
-
 //EEPROM
 #include <EEPROM.h>
 #define EEPROM_SIZE 3

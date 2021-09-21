@@ -10,6 +10,7 @@
 #include <HTTPClient.h>
 #include <Update.h>
 #define VARIANT "esp32"
+#define CURRENT_VERSION VERSION
 
 #include <WiFiManager.h>
 
