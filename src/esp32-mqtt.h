@@ -15,7 +15,7 @@
 
 //EEPROM
 #include <EEPROM.h>
-#define EEPROM_SIZE 3
+#define EEPROM_SIZE 30
 
 // GMAIL SENDER AND SERVER
 #define emailSenderAccount    "ddstmesp32@gmail.com"
